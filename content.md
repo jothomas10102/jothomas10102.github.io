@@ -10,7 +10,8 @@ Contact me at jmt10102@nyu.edu. Here is my resume and Github.
 
 Electro TA
 
-BMS, Fuses, Manufacturing all for motorsports
+## NYU Motorsports
+I joined NYU Motorsports the fall semester of my sophomore year. Since then, I've real hands on engineering experience pushing the High Voltage division  further to make our team competitive with other universities. I've also gained much knowledge from senior members on designing, manufacturing and testing over the past year. As the new High Voltage lead, I strive to make our car safe, efficient and reliable. 
 
 ## PCB Evolution
 
