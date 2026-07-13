@@ -26,7 +26,7 @@ I started working on my own PCB designs when I was introduced to Altium by my se
     <figcaption>BJT Amplifier — cleaner layout.</figcaption>
   </figure>
   <figure style="flex: 1; margin: 0;">
-    <img src="assets/soundforge.jpg" alt="SoundForge FPGA carrier board" style="width: 100%;">
+    <img src="assets/sound-forge.jpg" alt="SoundForge FPGA carrier board" style="width: 100%;">
     <figcaption>SoundForge — FPGA audio-effects carrier.</figcaption>
   </figure>
 </div>
