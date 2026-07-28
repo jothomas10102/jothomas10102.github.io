@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- Detail page. To make another project page, copy this file, rename it, edit the content. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Electro TA — JT</title>
+  <meta name="description" content="A live Electrical Engineering Teaching Agent built for Gemini's Live Agent Challenge, using an ESP32 and Arducam over I2C and SPI." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap detail">
+    <a class="back" href="index.html">← Back to home</a>
+    <p class="eyebrow">Project</p>
+    <h1>Electro TA</h1>
+    <p class="detail-meta">Hackathon · Gemini Live Agent Challenge · ESP32 · Arducam</p>
+    <div class="links">
+      <a href="https://www.youtube.com/watch?v=KsgKGi3wAVk">Watch the demo ↗</a>
+    </div>
+
+    <img class="hero-img" alt="The Electro TA hardware setup"
+         src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='420'%3E%3Crect width='100%25' height='100%25' fill='%23eeeeec'/%3E%3Ctext x='50%25' y='50%25' fill='%23aaaaa7' font-family='monospace' font-size='14' text-anchor='middle' dominant-baseline='middle'%3Eassets/electro-ta.jpg%3C/text%3E%3C/svg%3E" />
+
+    <p>A hackathon project my roommate and I built for Gemini's Live Agent Challenge. The task was to build an AI agent with multimodal inputs and outputs — one that moves beyond simple text interactions. We designed a live Electrical Engineering Teaching Agent that can help debug hardware in real time.</p>
+
+    <h2>Getting a usable image to the agent</h2>
+    <p>We used an ESP32 devkit microcontroller, alligator clips for reading voltage signals, and an Arducam to send pictures to the agent. To make a conversation feel seamless, you can't have large pauses between speaking — so latency was the enemy. An early hardship was latency with the Arducam: we wanted to send pictures of the student's breadboard circuit to Gemini, and not being able to send a photo quickly would prolong every response.</p>
+    <p>We had to learn about two communication protocols the Arducam uses simultaneously: I2C and SPI. I2C handles the internal register of the camera, while SPI handles downloading the actual JPEG bytes. Finding the balance between increasing image resolution and still being able to transmit it was very difficult — a lot of testing went into finding the perfect ratio of resolution and baud rate, as well as focusing the camera. We also added code to improve the saturation of the image, which was crucial for getting a comprehensible picture to the agent.</p>
+
+    <h2>A mini "multimeter" on the ESP32</h2>
+    <p>We also wanted to send real-time information about the circuit to Gemini. Using the ADC pins on the ESP32, we built our own mini "multimeter." It works by taking the absolute voltage at a node (not the voltage drop) and scaling it down through a small voltage-divider circuit to feed it into the ESP32.</p>
+    <p>We learned this the hard way when our first ESP32 got fried from reading too high a voltage (5V at the time). The ESP32 ADC pins can only handle 0–3.3V, so to read a 5V signal we had to scale the voltage down and then multiply by that same scaling factor in the program to recover the correct reading. That scaling factor is about 2.04 — just basic circuit algebra — and you can see it in the ESP32 firmware.</p>
+
+    <h2>Safeguards</h2>
+    <p>To make the system more robust we added both hardware and software safeguards. On the hardware side, a Zener diode protects the board: if the voltage exceeds 3.3V, the Zener enters breakdown and dumps the excess into ground, protecting the circuit. On the firmware side, since ADC readings on the ESP32 can be very noisy, we used oversampling — rapidly taking 20 voltage readings and averaging them to get a stable number to send to the agent.</p>
+
+    <h2>The software</h2>
+    <p>Two scripts run with the microcontroller. The first is written in C++ (in PlatformIO) and tells the microcontroller how to capture pictures and read voltage. The second is a Python script that saves the image and the voltage at a given time, then sends that information to the live agent.</p>
+
+    <footer>Last updated July 2026.</footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BitCrusher Plugin — JT</title>
+  <meta name="description" content="An audio BitCrusher VST built from scratch after researching bit-depth and sample-rate reduction — chasing that 8-bit videogame charm." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap detail">
+    <a class="back" href="index.html">← Back to home</a>
+    <p class="eyebrow">Project</p>
+    <h1>BitCrusher Plugin</h1>
+    <p class="detail-meta">Personal project · VST · Audio DSP</p>
+    <div class="links">
+      <a href="https://github.com/jothomas10102/bitcrushervst">GitHub repository ↗</a>
+    </div>
+
+    <p>I love the sound of videogame music — specifically that 8-bit charm you hear in old games, or even in games like Undertale and Deltarune (side note: if you want to hear me yap for hours, mention either of these games — I will talk about the lore, the music, and everything in between). So I wanted to research how the effect works and then build my own plugin implementing those algorithms.</p>
+
+    <p>A BitCrusher lowers the quality of an audio signal through two mechanisms: <strong>bit depth</strong> and <strong>sample rate</strong>.</p>
+
+    <h2>Bit depth</h2>
+    <p>Each slice of audio records a value, and the precision of that value is the bit depth (the value is stored in binary). Reducing the bit depth changes the waveform by adding harmonics and reduces the dynamic range — the more you lower it, the more the sample starts to look like a square wave, and it can even bring up the volume of the noise floor.</p>
+    <!-- EDIT: these two diagrams are pulled from your GitHub uploads. Move them into assets/ later if you want everything local. -->
+    <figure>
+      <img alt="Bit depth diagram" src="https://github.com/user-attachments/assets/14cf3cb0-e430-432d-a794-c1c442100f25" />
+      <figcaption>Bit depth: the precision of each recorded value.</figcaption>
+    </figure>
+
+    <h2>Sample rate</h2>
+    <p>The sample rate is the number of slices taken of a signal per second — 44.1kHz to 48kHz is pretty common. To record a note properly you need a sample rate at least twice the frequency of the note (the Nyquist limit), which captures the two peaks of the waveform and its frequency. Reducing the sample rate (downsampling) means higher frequencies become too large for the sample rate and get misinterpreted as lower frequencies — this is aliasing. A low-pass filter can avoid that and give you a cleaner distortion.</p>
+    <figure>
+      <img alt="Sample rate diagram" src="https://github.com/user-attachments/assets/ce8682ab-3549-4775-bdfb-dbadf3d6bd9b" />
+      <figcaption>Sample rate: how many slices per second are taken.</figcaption>
+    </figure>
+
+    <h2>The Dry/Wet mix</h2>
+    <p>The mix knob is a dry/wet control. Dry is the raw, unprocessed signal before any effects; wet is the signal after being processed. The knob controls how much of the effect is applied — but it doesn't change how the audio is processed, it just determines how much of the wet and dry signals are mixed together at the output.</p>
+    <p>The progression isn't linear. From 0–50%, the raw dry sound stays the same while the wet sound increases from 0 to 100%. From 50–100%, the wet sound stays the same while the dry signal decreases from 100% to 0%. So as you turn the knob up, you introduce more of the effect while reducing the volume of the unprocessed signal.</p>
+
+    <footer>Last updated July 2026.</footer>
+  </main>
+</body>
+</html>
