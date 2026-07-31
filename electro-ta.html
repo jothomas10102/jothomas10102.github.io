@@ -16,6 +16,8 @@
     <p class="detail-meta">Hackathon · Gemini Live Agent Challenge · ESP32 · Arducam</p>
     <div class="links">
       <a href="https://www.youtube.com/watch?v=KsgKGi3wAVk">Watch the demo ↗</a>
+      <a href="https://github.com/erenmenges/ElectroTA">Check out the Repository for more info ↗</a>
+
     </div>
 
     <img class="hero-img" alt="The Electro TA hardware setup" src="assets/ElectroTaPanel.jpg" loading="lazy" />
@@ -28,10 +30,10 @@
 
     <h2>A mini "multimeter" on the ESP32</h2>
     <p>We also wanted to send real time information about the circuit to Gemini. Using the ADC pins on the ESP32, we built our own mini "multimeter." It works by taking the absolute voltage at a node (not the voltage drop) and scaling it down through a small voltage-divider circuit to feed it into the ESP32.</p>
-    <p>We learned this the hard way when our first ESP32 got fried from reading too high a voltage (5V at the time). The ESP32 ADC pins can only handle 0–3.3V, so to read a 5V signal we had to scale the voltage down and then multiply by that same scaling factor in the program to recover the correct reading. That scaling factor is about 2.04 — just basic circuit algebra — and you can see it in the ESP32 firmware.</p>
+    <p>We learned this the hard way when our first ESP32 got fried from reading too high a voltage (5V at the time). The ESP32 ADC pins can only handle 0–3.3V, so to read a 5V signal we had to scale the voltage down and then multiply by that same scaling factor in the program to recover the correct reading. That scaling factor is about 2.04, just basic circuit algebra, and you can see it in the ESP32 firmware.</p>
 
     <h2>Safeguards</h2>
-    <p>To make the system more robust we added both hardware and software safeguards. On the hardware side, a Zener diode protects the board: if the voltage exceeds 3.3V, the Zener enters breakdown and dumps the excess into ground, protecting the circuit. On the firmware side, since ADC readings on the ESP32 can be very noisy, we used oversampling — rapidly taking 20 voltage readings and averaging them to get a stable number to send to the agent.</p>
+    <p>To make the system more robust we added both hardware and software safeguards. On the hardware side, a Zener diode protects the board: if the voltage exceeds 3.3V, the Zener enters breakdown and dumps the excess into ground, protecting the circuit. On the firmware side, since ADC readings on the ESP32 can be very noisy, we used oversampling (rapidly taking 20 voltage readings and averaging them) to get a stable number to send to the agent.</p>
 
     <h2>The software</h2>
     <p>Two scripts run with the microcontroller. The first is written in C++ (in PlatformIO) and tells the microcontroller how to capture pictures and read voltage. The second is a Python script that saves the image and the voltage at a given time, then sends that information to the live agent.</p>
