@@ -31,6 +31,107 @@
     <p>How the Bitcrusher Algorithm works: bitcrusher simpy reduces the amplitude resolution of an audio signal. An audio wave's amplitude is represented by foating point numbers between [-1.0 - 1.0]. Then, that sample is multiplied by our bit_level and rounded. Then we scale it back down between -1.0 and 1.0 by dividing it by the bit_level. It's a little more abstract to see but I think it makes more sense with numbers. Say our bit depth is 3. that means our bit_levels = 8 since 2^3 is 8. If we multiply an amplitude that is 0.30, we get 2.4 When we round it, it goes to 2. Then we divide it by 8 again, and this bring it down to .250. Thus we have reduced the value of our amplitude. </p>
         <img class="hero-img" alt="Bit Depth Code"
          src="assets/bitcrushcode.jpg" loading ="lazy"/>
+
+ <!-- ===== Interactive bit-depth demo ===== -->
+    <div class="demo">
+      <h2 class="sr-only">Interactive bitcrusher: a smooth sine wave overlaid with its quantized staircase output, with an adjustable bit-depth slider.</h2>
+      <p class="demo-label">Try it — drag the slider</p>
+ 
+      <div style="display: flex; align-items: center; gap: 12px; margin: 0 0 1rem; flex-wrap: wrap;">
+        <label for="bd" style="font-size: 14px; color: var(--text-secondary); min-width: 70px;">Bit depth</label>
+        <input type="range" min="1" max="6" value="3" step="1" id="bd" style="flex: 1; min-width: 160px;" />
+        <span style="font-size: 15px; font-weight: 500; min-width: 16px;" id="bd-out">3</span>
+      </div>
+ 
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin: 0 0 1.25rem;">
+        <div style="background: var(--bg); border-radius: var(--radius); padding: 0.75rem 1rem;">
+          <div class="stat-title" style="font-size: 13px; color: var(--text-secondary);">Levels (2^bitDepth)</div>
+          <div class="stat-value" style="font-size: 22px; font-weight: 500;" id="lv">8</div>
+        </div>
+        <div style="background: var(--bg); border-radius: var(--radius); padding: 0.75rem 1rem;">
+          <div class="stat-title" style="font-size: 13px; color: var(--text-secondary);">Step size</div>
+          <div class="stat-value" style="font-size: 22px; font-weight: 500;" id="ss">0.125</div>
+        </div>
+      </div>
+ 
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 8px; font-size: 12px; color: var(--text-secondary);">
+        <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 16px; height: 2px; background: var(--muted);"></span>Original (dry)</span>
+        <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 16px; height: 3px; background: var(--accent);"></span>Crushed (wet)</span>
+      </div>
+ 
+      <div style="position: relative; width: 100%; height: 320px;">
+        <canvas id="chart" role="img" aria-label="A sine wave and its bit-crushed staircase version, plotted together against gridlines at each quantization level.">Sine wave versus its quantized staircase output.</canvas>
+      </div>
+    </div>
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script>
+    (function(){
+      const N = 500, cycles = 2;
+      const xs = Array.from({length: N}, (_, i) => i / (N - 1) * cycles);
+      const dry = xs.map(x => 0.9 * Math.sin(2 * Math.PI * x));
+ 
+      function crush(depth){
+        const levels = Math.pow(2, depth);
+        return dry.map(v => Math.round(v * levels) / levels);
+      }
+ 
+      // Pull colors straight from the site's palette so the chart matches the page.
+      const css = getComputedStyle(document.documentElement);
+      const accent = css.getPropertyValue('--accent').trim() || '#a85d2b';
+      const muted  = css.getPropertyValue('--muted').trim()  || '#6b6b68';
+      const grid   = css.getPropertyValue('--hairline').trim() || '#e8e6e1';
+ 
+      function levelTicks(depth){
+        const step = 1 / Math.pow(2, depth), ticks = [];
+        for (let v = -1; v <= 1.0001; v += step) ticks.push(Math.round(v * 1e6) / 1e6);
+        return ticks;
+      }
+ 
+      const ctx = document.getElementById('chart');
+      let depth = 3;
+ 
+      const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: xs,
+          datasets: [
+            { label: 'Crushed', data: crush(depth), borderColor: accent, borderWidth: 2.5, pointRadius: 0, tension: 0, stepped: false },
+            { label: 'Original', data: dry, borderColor: muted, borderWidth: 1.5, borderDash: [4,4], pointRadius: 0, tension: 0.3 }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, animation: false,
+          interaction: { intersect: false, mode: 'index' },
+          scales: {
+            x: { display: false, min: 0, max: cycles },
+            y: {
+              min: -1, max: 1,
+              afterBuildTicks: (axis) => { axis.ticks = levelTicks(depth).map(v => ({ value: v })); },
+              ticks: { color: muted, font: { size: 10 }, callback: v => v.toFixed(3) },
+              grid: { color: grid }
+            }
+          },
+          plugins: { legend: { display: false }, tooltip: { enabled: false } }
+        }
+      });
+ 
+      const bd = document.getElementById('bd');
+      bd.addEventListener('input', () => {
+        depth = parseInt(bd.value, 10);
+        const levels = Math.pow(2, depth), step = 1 / levels;
+        document.getElementById('bd-out').textContent = depth;
+        document.getElementById('lv').textContent = levels;
+        document.getElementById('ss').textContent = step.toFixed(4).replace(/0+$/,'').replace(/\.$/,'');
+        chart.data.datasets[0].data = crush(depth);
+        chart.update('none');
+      });
+    })();
+    </script>
+    <!-- ===== end interactive demo ===== -->
+
+
+    
     <h2>Sample rate</h2>
     <p>The sample rate is the number of slices taken of a signal per second. 44.1kHz to 48kHz is pretty common. To record a note properly you need a sample rate at least twice the frequency of the note (the Nyquist limit), which captures the two peaks of the waveform and its frequency. Reducing the sample rate (downsampling) means higher frequencies become too large for the sample rate and get misinterpreted as lower frequencies. This is known as aliasing. A low-pass filter can avoid that and give you a cleaner distortion.</p>
     <figure>
