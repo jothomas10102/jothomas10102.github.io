@@ -29,7 +29,8 @@
       <figcaption>Bit depth: the precision of each recorded value.</figcaption>
     </figure>
     <p>How the Bitcrusher Algorithm works: bitcrusher simpy reduces the amplitude resolution of an audio signal. An audio wave's amplitude is represented by foating point numbers between [-1.0 - 1.0]. Then, that sample is multiplied by our bit_level and rounded. Then we scale it back down between -1.0 and 1.0 by dividing it by the bit_level. It's a little more abstract to see but I think it makes more sense with numbers. Say our bit depth is 3. that means our bit_levels = 8 since 2^3 is 8. If we multiply an amplitude that is 0.30, we get 2.4 When we round it, it goes to 2. Then we divide it by 8 again, and this bring it down to .250. Thus we have reduced the value of our amplitude. </p>
-<img alt="Bit depth code" src="assets/bitcrushcode.jpg" loading="lazy"/>
+        <img class="hero-img" alt="Bit Depth Code"
+         src="assets/bitcrushcode.jpg" loading ="lazy"/>
     <h2>Sample rate</h2>
     <p>The sample rate is the number of slices taken of a signal per second. 44.1kHz to 48kHz is pretty common. To record a note properly you need a sample rate at least twice the frequency of the note (the Nyquist limit), which captures the two peaks of the waveform and its frequency. Reducing the sample rate (downsampling) means higher frequencies become too large for the sample rate and get misinterpreted as lower frequencies. This is known as aliasing. A low-pass filter can avoid that and give you a cleaner distortion.</p>
     <figure>
