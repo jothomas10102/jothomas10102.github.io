@@ -141,101 +141,54 @@
 <p> Downsampling is an effect meant to reduce the sample rate, by outputting previous values instead of new ones. Like bit_depth, it is a way to reduce the resolution of an audio signal except this time it reduces the time resolution rather than the a wave's amplitude. It works like a counter, where the output waveform only updates on every Nth sample, where downsampling = N. We basically just have a counter for each channel that checks if we hit the downsampling number. When we do, we reset the counter and then we update the new output waveform with the new sample </p>
     <img class="hero-img" alt="downsampling code"
          src="assets/downSampling-code.jpg" loading ="lazy"/>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Downsampling (sample &amp; hold) visualizer</title>
-<style>
-  :root {
-    --bg: #faf9f5;
-    --surface: #ffffff;
-    --card: #f1efe8;
-    --text: #1a1a19;
-    --text-secondary: #5f5e5a;
-    --text-muted: #898781;
-    --border: #e1e0d9;
-    --accent: #2a78d6;
-    --radius: 8px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1a1a19;
-      --surface: #262625;
-      --card: #2c2c2a;
-      --text: #f5f5f0;
-      --text-secondary: #c3c2b7;
-      --text-muted: #898781;
-      --border: #38383550;
-      --accent: #3987e5;
+
+<div class="ds-viz">
+  <style>
+    .ds-viz {
+      --ds-text: #1a1a19; --ds-secondary: #5f5e5a; --ds-muted: #898781;
+      --ds-card: #f1efe8; --ds-border: #e1e0d9; --ds-accent: #2a78d6;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      color: var(--ds-text); max-width: 760px; line-height: 1.6;
     }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  .wrap {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 2.5rem 1.5rem 3rem;
-  }
-  h1 { font-size: 22px; font-weight: 500; margin: 0 0 0.25rem; }
-  .sub { color: var(--text-secondary); font-size: 15px; margin: 0 0 2rem; }
-  .controls { display: flex; align-items: center; gap: 12px; margin: 0 0 1.25rem; flex-wrap: wrap; }
-  label { font-size: 14px; color: var(--text-secondary); min-width: 110px; }
-  input[type=range] {
-    flex: 1; min-width: 160px; accent-color: var(--accent); height: 4px;
-  }
-  .val { font-size: 15px; font-weight: 500; min-width: 22px; text-align: right; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin: 0 0 1.5rem; }
-  .stat { background: var(--card); border-radius: var(--radius); padding: 0.75rem 1rem; }
-  .stat .k { font-size: 13px; color: var(--text-secondary); }
-  .stat .v { font-size: 22px; font-weight: 500; margin-top: 2px; }
-  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 10px; font-size: 12px; color: var(--text-secondary); }
-  .legend span { display: flex; align-items: center; gap: 6px; }
-  .swatch-line { width: 16px; height: 2px; background: var(--text-muted); }
-  .swatch-held { width: 16px; height: 3px; background: var(--accent); }
-  .swatch-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
-  .chart-box { position: relative; width: 100%; height: 340px; }
-  footer { margin-top: 2rem; font-size: 13px; color: var(--text-muted); border-top: 0.5px solid var(--border); padding-top: 1rem; }
-  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; background: var(--card); padding: 1px 5px; border-radius: 4px; }
-</style>
-</head>
-<body>
-<div class="wrap">
-  <h1>Downsampling &mdash; sample &amp; hold</h1>
-  <p class="sub">Drag the factor and watch the smooth sine freeze into flat held steps. Dots mark where a fresh value is captured; the flat runs between them are that value repeated.</p>
+    @media (prefers-color-scheme: dark) {
+      .ds-viz {
+        --ds-text: #f5f5f0; --ds-secondary: #c3c2b7; --ds-muted: #898781;
+        --ds-card: #2c2c2a; --ds-border: #38383550; --ds-accent: #3987e5;
+      }
+    }
+    .ds-viz .ds-controls { display: flex; align-items: center; gap: 12px; margin: 0 0 1.25rem; flex-wrap: wrap; }
+    .ds-viz label { font-size: 14px; color: var(--ds-secondary); min-width: 110px; }
+    .ds-viz input[type=range] { flex: 1; min-width: 160px; accent-color: var(--ds-accent); height: 4px; }
+    .ds-viz .ds-val { font-size: 15px; font-weight: 500; min-width: 22px; text-align: right; }
+    .ds-viz .ds-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin: 0 0 1.5rem; }
+    .ds-viz .ds-stat { background: var(--ds-card); border-radius: 8px; padding: 0.75rem 1rem; }
+    .ds-viz .ds-stat .k { font-size: 13px; color: var(--ds-secondary); }
+    .ds-viz .ds-stat .v { font-size: 22px; font-weight: 500; margin-top: 2px; }
+    .ds-viz .ds-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 10px; font-size: 12px; color: var(--ds-secondary); }
+    .ds-viz .ds-legend span { display: flex; align-items: center; gap: 6px; }
+    .ds-viz .ds-chart-box { position: relative; width: 100%; height: 340px; }
+  </style>
  
-  <div class="controls">
-    <label for="ds">Downsample factor</label>
-    <input type="range" id="ds" min="1" max="16" value="6" step="1">
-    <span class="val" id="ds-out">6</span>
+  <div class="ds-controls">
+    <label for="ds-factor">Downsample factor</label>
+    <input type="range" id="ds-factor" min="1" max="16" value="6" step="1">
+    <span class="ds-val" id="ds-out">6</span>
   </div>
  
-  <div class="stats">
-    <div class="stat"><div class="k">Values kept</div><div class="v" id="kept">1 in 6</div></div>
-    <div class="stat"><div class="k">Effective rate</div><div class="v" id="rate">7.4 kHz</div></div>
+  <div class="ds-stats">
+    <div class="ds-stat"><div class="k">Values kept</div><div class="v" id="ds-kept">1 in 6</div></div>
+    <div class="ds-stat"><div class="k">Effective rate</div><div class="v" id="ds-rate">7.4 kHz</div></div>
   </div>
  
-  <div class="legend">
-    <span><span class="swatch-line"></span>Original</span>
-    <span><span class="swatch-held"></span>Held (downsampled)</span>
-    <span><span class="swatch-dot"></span>Capture point</span>
+  <div class="ds-legend">
+    <span><span style="width:16px;height:2px;background:var(--ds-muted)"></span>Original</span>
+    <span><span style="width:16px;height:3px;background:var(--ds-accent)"></span>Held (downsampled)</span>
+    <span><span style="width:9px;height:9px;border-radius:50%;background:var(--ds-accent)"></span>Capture point</span>
   </div>
  
-  <div class="chart-box">
-    <canvas id="chart" role="img" aria-label="A sine wave and its sample-and-hold downsampled version plotted together, with dots marking where each value is captured and held."></canvas>
+  <div class="ds-chart-box">
+    <canvas id="ds-chart" role="img" aria-label="A sine wave and its sample-and-hold downsampled version plotted together, with dots marking each captured and held value."></canvas>
   </div>
- 
-  <footer>
-    Assumes a base rate of 44.1&nbsp;kHz. The hold logic mirrors the plugin: a per-channel counter increments each sample, and when it reaches <code>downSampling</code> a fresh value is captured and held until the next capture.
-  </footer>
 </div>
  
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
@@ -243,36 +196,37 @@
 (function(){
   const N = 600, cycles = 3, BASE_RATE = 44.1;
   const xs = Array.from({length: N}, (_, i) => i / (N - 1) * cycles);
-  const orig = xs.map(x => 0.9 * Math.sin(2 * Math.PI * x));
+  const origY = xs.map(x => 0.9 * Math.sin(2 * Math.PI * x));
+  const origPts = xs.map((x, i) => ({ x, y: origY[i] }));
  
   function hold(factor){
     const out = [], caps = [];
-    let phase = 0, held = orig[0];
+    let phase = 0, held = origY[0];
     for (let i = 0; i < N; i++){
       phase += 1;
-      if (phase >= factor){ phase -= factor; held = orig[i]; caps.push({x: xs[i], y: held}); }
-      out.push(held);
+      if (phase >= factor){ phase -= factor; held = origY[i]; caps.push({x: xs[i], y: held}); }
+      out.push({ x: xs[i], y: held });
     }
     return { out, caps };
   }
  
-  const css = getComputedStyle(document.documentElement);
-  const muted = css.getPropertyValue('--text-muted').trim() || '#898781';
-  const accent = css.getPropertyValue('--accent').trim() || '#2a78d6';
+  const root = document.querySelector('.ds-viz');
+  const css = getComputedStyle(root);
+  const muted = css.getPropertyValue('--ds-muted').trim() || '#898781';
+  const accent = css.getPropertyValue('--ds-accent').trim() || '#2a78d6';
   const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
   const grid = isDark ? '#2c2c2a' : '#e1e0d9';
  
   let factor = 6;
   const first = hold(factor);
  
-  const chart = new Chart(document.getElementById('chart'), {
+  const chart = new Chart(document.getElementById('ds-chart'), {
     type: 'line',
     data: {
-      labels: xs,
       datasets: [
         { label: 'Held', data: first.out, borderColor: accent, borderWidth: 2.5, pointRadius: 0, stepped: 'before', tension: 0 },
-        { label: 'Captures', data: first.caps, borderColor: 'transparent', backgroundColor: accent, pointRadius: 3.5, pointHoverRadius: 3.5, showLine: false, parsing: false },
-        { label: 'Original', data: orig, borderColor: muted, borderWidth: 1.5, borderDash: [4,4], pointRadius: 0, tension: 0.3 }
+        { label: 'Captures', data: first.caps, borderColor: 'transparent', backgroundColor: accent, pointRadius: 3.5, pointHoverRadius: 3.5, showLine: false },
+        { label: 'Original', data: origPts, borderColor: muted, borderWidth: 1.5, borderDash: [4,4], pointRadius: 0, tension: 0.3 }
       ]
     },
     options: {
@@ -286,21 +240,20 @@
     }
   });
  
-  const ds = document.getElementById('ds');
-  ds.addEventListener('input', () => {
-    factor = parseInt(ds.value, 10);
+  const slider = document.getElementById('ds-factor');
+  slider.addEventListener('input', () => {
+    factor = parseInt(slider.value, 10);
     const r = hold(factor);
     document.getElementById('ds-out').textContent = factor;
-    document.getElementById('kept').textContent = '1 in ' + factor;
-    document.getElementById('rate').textContent = (BASE_RATE / factor).toFixed(1) + ' kHz';
+    document.getElementById('ds-kept').textContent = '1 in ' + factor;
+    document.getElementById('ds-rate').textContent = (BASE_RATE / factor).toFixed(1) + ' kHz';
     chart.data.datasets[0].data = r.out;
     chart.data.datasets[1].data = r.caps;
     chart.update('none');
   });
 })();
 </script>
-</body>
-</html>
+    
     
     <h2>The Dry/Wet mix</h2>
     <p>The mix knob is a dry/wet control. Dry is the raw, unprocessed signal before any effects; wet is the signal after being processed. The knob controls how much of the effect is applied — but it doesn't change how the audio is processed, it just determines how much of the wet and dry signals are mixed together at the output.</p>
