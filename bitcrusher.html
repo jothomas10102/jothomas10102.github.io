@@ -138,7 +138,7 @@
       <img alt="Sample rate diagram" src="https://github.com/user-attachments/assets/ce8682ab-3549-4775-bdfb-dbadf3d6bd9b" />
       <figcaption>Sample rate: how many slices per second are taken.</figcaption>
     </figure>
-<p>The Downsampling effect is a way to reduce the sampe rate, by reducing the number of samples that are recorded. Like bit_depth, it is a way to reduce the resolution of an audio signal except this time it reduces the time resolution rather than the a wave's amplitude. It works sort of like a counter, where the output waveform only updates on every Nth sample, where downsampling = N. We basically just have a counter for each channel that checks if we hit the downsampling number. When we do, we update the new output waveform with the new sample </p>
+<p> Downsampling is an effect meant to reduce the sample rate, by outputting previous values instead of new ones. Like bit_depth, it is a way to reduce the resolution of an audio signal except this time it reduces the time resolution rather than the a wave's amplitude. It works like a counter, where the output waveform only updates on every Nth sample, where downsampling = N. We basically just have a counter for each channel that checks if we hit the downsampling number. When we do, we reset the counter and then we update the new output waveform with the new sample </p>
     <img class="hero-img" alt="downsampling code"
          src="assets/downSampling-code.jpg" loading ="lazy"/>
     <!DOCTYPE html>
