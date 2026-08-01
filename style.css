@@ -182,3 +182,10 @@ footer {
 /* mono for the numeric readouts, matching the site's data style */
 .demo .stat-title { font-family: var(--font-mono); letter-spacing: 0.02em; }
 .demo .stat-value { font-family: var(--font-mono); }
+
+
+video.hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
