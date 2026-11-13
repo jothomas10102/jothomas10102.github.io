@@ -260,3 +260,27 @@ figcaption { font-size: 15px; color: var(--muted); margin-top: 8px; }
 .resume-frame iframe { display: block; width: 100%; height: min(1050px, 85vh); border: 0; }
 .resume-note { margin-top: 12px !important; font-size: 15px; color: var(--muted); }
 @media (max-width: 520px) { .resume-frame iframe { height: 70vh; } }
+
+/* ---------- Detail pages: wide hero, matched pairs, text + photo row ---------- */
+.detail > figure.wide { max-width: 1056px; margin: 8px 0 40px; }
+.detail .lead { font-size: 22px; line-height: 1.5; color: var(--ink); }
+
+.detail > .pair, .detail > .media-row { max-width: 1056px; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; margin: 24px 0 8px; }
+.pair figure { margin: 0; }
+/* .same = both media cropped to one shape; set --ar inline, e.g. style="--ar: 4 / 3;" */
+.pair.same img, .pair.same video {
+  width: 100%; aspect-ratio: var(--ar, 4 / 3); object-fit: cover; display: block;
+  border-radius: var(--radius); background: var(--card);
+}
+
+.media-row {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 40px; align-items: start; margin: 8px 0;
+}
+.media-row figure { margin: 0; }
+.media-row img { aspect-ratio: 4 / 5; object-fit: cover; }
+
+@media (max-width: 700px) {
+  .pair, .media-row { grid-template-columns: 1fr; gap: 24px; }
+}

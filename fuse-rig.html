@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FSAE Fuse Rig - JT</title>
+  <meta name="description" content="A copper fuse test rig for NYU Motorsports: an enclosed, isolated setup that rates accumulator cell fuses, monitored by a Teensy with a Hall effect current sensor and thermistor." />
+  <meta property="og:image" content="https://www.jonathan-thomas.net/assets/fuse-glow.jpg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="name" href="index.html">Jonathan Thomas</a>
+      <nav aria-label="Main">
+        <a href="index.html#about">About</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#resume">Resume</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+  <main class="detail">
+    <h1>FSAE Fuse Rig <span class="wip">In progress</span></h1>
+    <p class="detail-meta">NYU Motorsports, Fusion 360, PlatformIO, Teensy, C/C++. June 2026 to present.</p>
+
+    <figure class="wide">
+      <img src="assets/fuse-glow.jpg" alt="A copper cell fuse glowing orange-hot between two aluminum clamps inside the rig, with a blue Hall effect current sensor clamped around the cable on the right" />
+      <figcaption>A fuse glowing mid-test, with the Hall effect current sensor clamped around the cable on the right.</figcaption>
+    </figure>
+
+    <p class="lead">Every cell in our accumulator has its own small copper fuse, and those fuses have to be rated before the car can pass FSAE tech inspection. I built this rig for <a href="nyu-motorsports.html">NYU Motorsports</a> to test them.</p>
+
+    <p>We used it to rate our cell fuses at 35A, which resolved a tech inspection failure. It also replaces last year's setup with a safe, enclosed, isolated environment that meets electrical isolation protocols.</p>
+
+    <h2>Fusion 360 vs. the real thing</h2>
+
+    <div class="pair same" style="--ar: 16 / 10;">
+      <figure>
+        <img src="assets/fuse-rig-cad.png" alt="Fusion 360 model of the fuse rig: an open wooden enclosure holding power resistors, boards and connectors, with its lid lifted off" loading="lazy" />
+        <figcaption>The model in Fusion 360.</figcaption>
+      </figure>
+      <figure>
+        <img style="object-position: 50% 35%;" src="assets/fuse-rig-team.jpg" alt="Jonathan and two others standing behind the finished fuse rig: a wooden box holding the power supply, gold power resistors and the fuse clamps" loading="lazy" />
+        <figcaption>The finished rig.</figcaption>
+      </figure>
+    </div>
+
+    <h2>How it works</h2>
+
+    <div class="media-row">
+      <div>
+        <p>The rig is monitored by a Hall effect current sensor and a thermistor, both wired to a Teensy. The firmware captures current and temperature data through each fuse test, so every rating comes with a record of what actually happened.</p>
+        <p>Before testing, I checked the parts on the bench. The gold power resistors are 0.1&nbsp;Ω, and a 4-wire measurement read one at 0.0992&nbsp;Ω.</p>
+      </div>
+      <figure>
+        <img style="object-position: 50% 30%;" src="assets/fuse-rig-bench.jpg" alt="Two gold power resistors labeled R2 and R3 on a bench, wired to a Keysight multimeter showing a 4-wire resistance of 0.0992 ohms" loading="lazy" />
+        <figcaption>Measuring a power resistor with a 4-wire measurement.</figcaption>
+      </figure>
+    </div>
+
+    <h2>Making and breaking fuses</h2>
+
+    <div class="pair same" style="--ar: 4 / 5;">
+      <figure>
+        <video src="assets/fuse-milling.mp4" poster="assets/fuse-milling-poster.jpg"
+               autoplay muted loop playsinline controls preload="metadata"
+               aria-label="A CNC mill cutting fuse shapes out of copper sheet"></video>
+        <figcaption>Milling fuses out of copper sheet.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/fuse-after-test.jpg" alt="A copper cell fuse held between two fingers, broken at its heat-discolored narrow neck after a test" loading="lazy" />
+        <figcaption>After a burn test. It broke at the narrow neck, right where it's designed to.</figcaption>
+      </figure>
+    </div>
+
+    <!-- Popping video coming later: add another <figure class="wide"> with a <video> here. -->
+
+    <footer><span>Last updated November 2026.</span><a href="index.html">Back to all projects</a></footer>
+  </main>
+  </div>
+</body>
+</html>
