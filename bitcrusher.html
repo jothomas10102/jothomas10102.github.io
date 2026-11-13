@@ -8,11 +8,19 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="wrap detail">
-    <a class="back" href="index.html">← Back to home</a>
-    <p class="eyebrow">Project</p>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="name" href="index.html">Jonathan Thomas</a>
+      <nav aria-label="Main">
+        <a href="index.html#about">About</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#resume">Resume</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+  <main class="detail">
     <h1>BitCrusher Plugin</h1>
-    <p class="detail-meta">Personal project · VST · Audio DSP</p>
+    <p class="detail-meta">Personal project, VST, Audio DSP</p>
     <div class="links">
       <a href="https://github.com/jothomas10102/bitcrushervst">GitHub repository ↗</a>
     </div>
@@ -35,7 +43,7 @@
  <!-- ===== Interactive bit-depth demo ===== -->
     <div class="demo">
       <h2 class="sr-only">Interactive bitcrusher: a smooth sine wave overlaid with its quantized staircase output, with an adjustable bit-depth slider.</h2>
-      <p class="demo-label">TDrag the slider to see how it works</p>
+      <p class="demo-label">Drag the slider to see how it works</p>
  
       <div style="display: flex; align-items: center; gap: 12px; margin: 0 0 1rem; flex-wrap: wrap;">
         <label for="bd" style="font-size: 14px; color: var(--text-secondary); min-width: 70px;">Bit depth</label>
@@ -80,7 +88,7 @@
       const css = getComputedStyle(document.documentElement);
       const accent = css.getPropertyValue('--accent').trim() || '#a85d2b';
       const muted  = css.getPropertyValue('--muted').trim()  || '#6b6b68';
-      const grid   = css.getPropertyValue('--hairline').trim() || '#e8e6e1';
+      const grid   = css.getPropertyValue('--line').trim() || '#2a313d';
  
       function levelTicks(depth){
         const step = 1 / Math.pow(2, depth), ticks = [];
@@ -145,16 +153,10 @@
 <div class="ds-viz">
   <style>
     .ds-viz {
-      --ds-text: #1a1a19; --ds-secondary: #5f5e5a; --ds-muted: #898781;
-      --ds-card: #f1efe8; --ds-border: #e1e0d9; --ds-accent: #2a78d6;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      --ds-text: var(--ink); --ds-secondary: var(--muted); --ds-muted: var(--muted);
+      --ds-card: var(--card); --ds-border: var(--line); --ds-accent: var(--accent);
+      font-family: var(--font);
       color: var(--ds-text); max-width: 760px; line-height: 1.6;
-    }
-    @media (prefers-color-scheme: dark) {
-      .ds-viz {
-        --ds-text: #f5f5f0; --ds-secondary: #c3c2b7; --ds-muted: #898781;
-        --ds-card: #2c2c2a; --ds-border: #38383550; --ds-accent: #3987e5;
-      }
     }
     .ds-viz .ds-controls { display: flex; align-items: center; gap: 12px; margin: 0 0 1.25rem; flex-wrap: wrap; }
     .ds-viz label { font-size: 14px; color: var(--ds-secondary); min-width: 110px; }
@@ -214,8 +216,7 @@
   const css = getComputedStyle(root);
   const muted = css.getPropertyValue('--ds-muted').trim() || '#898781';
   const accent = css.getPropertyValue('--ds-accent').trim() || '#2a78d6';
-  const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
-  const grid = isDark ? '#2c2c2a' : '#e1e0d9';
+    const grid = css.getPropertyValue('--line').trim() || '#2a313d';
  
   let factor = 6;
   const first = hold(factor);
@@ -259,7 +260,8 @@
     <p>The mix knob is a dry/wet control. Dry is the raw, unprocessed signal before any effects; wet is the signal after being processed. The knob controls how much of the effect is applied — but it doesn't change how the audio is processed, it just determines how much of the wet and dry signals are mixed together at the output.</p>
     <p>The progression isn't linear. From 0–50%, the raw dry sound stays the same while the wet sound increases from 0 to 100%. From 50–100%, the wet sound stays the same while the dry signal decreases from 100% to 0%. So as you turn the knob up, you introduce more of the effect while reducing the volume of the unprocessed signal.</p>
 
-    <footer>Last updated July 2026.</footer>
+    <footer><span>Last updated November 2026.</span><a href="index.html">Back to all projects</a></footer>
   </main>
+  </div>
 </body>
 </html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tractive System Control Board - JT</title>
+  <meta name="description" content="A redesign of NYU Motorsports' high-voltage precharge and indicator PCB in KiCad: lamp check logic, a tractive-system-powered accumulator voltage indicator, and a fixed IMD relay latch." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="name" href="index.html">Jonathan Thomas</a>
+      <nav aria-label="Main">
+        <a href="index.html#about">About</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#resume">Resume</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+  <main class="detail">
+    <h1>Tractive System Control Board <span class="wip">In progress</span></h1>
+    <p class="detail-meta">NYU Motorsports, PCB design, KiCad, High voltage. October 2026 to present.</p>
+
+    <img class="hero-img" alt="3D render of the Tractive System Control Board in KiCad, showing the relays, connectors and control circuitry"
+         src="assets/tsc-board-3d.jpg" />
+
+    <p>This is the board I'm designing right now for <a href="nyu-motorsports.html">NYU Motorsports</a>. It's a redesign of the team's HV Precharge and Indicator PCB from last year, built in KiCad, and it's still a work in progress.</p>
+
+    <h2>What I'm changing</h2>
+
+    <p><strong>Lamp check on power up.</strong> I added lamp check logic so that when the car's low-voltage (GLV) system powers up, the board lights the Tractive System Status Indicator, the Ready to Move Light, and the BMS and IMD cockpit lights. That way you can see every indicator works before the car goes anywhere.</p>
+
+    <p><strong>A working Accumulator Voltage Indicator.</strong> Last year's indicator failed electrical tech inspection. I redesigned the circuit so it's powered directly from the tractive system (up to 480V), using a 900V current regulator and a 56V Zener threshold.</p>
+
+    <p><strong>Fixing the IMD relay latch.</strong> I tracked down a latching failure in the IMD shutdown relay and designed a MOSFET circuit so the relay latch can actually engage.</p>
+
+    <figure>
+      <img src="assets/tsc-board-layout.png" alt="KiCad PCB layout of the board, with labeled sections for VBat and VTs scaling, BMS and IMD latching, TSSI and RTML, GLV, and the microcontroller" loading="lazy" />
+      <figcaption>The current layout in KiCad.</figcaption>
+    </figure>
+
+    <footer><span>Last updated November 2026.</span><a href="index.html">Back to all projects</a></footer>
+  </main>
+  </div>
+</body>
+</html>

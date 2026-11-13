@@ -8,11 +8,19 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="wrap detail">
-    <a class="back" href="index.html">← Back to home</a>
-    <p class="eyebrow">Project</p>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="name" href="index.html">Jonathan Thomas</a>
+      <nav aria-label="Main">
+        <a href="index.html#about">About</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#resume">Resume</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+  <main class="detail">
     <h1>SoundForge</h1>
-    <p class="detail-meta">Personal project · FPGA · Audio hardware</p>
+    <p class="detail-meta">Personal project, FPGA, Audio hardware</p>
     <div class="links">
       <a href="https://github.com/jothomas10102/SoundForge">GitHub repository, Please check it out !!! ↗</a>
     </div>
@@ -24,7 +32,8 @@
 
     <p>It's an FPGA carrier board that lets a keyboard or guitar signal be transformed by any audio effect the user designs on the FPGA. It drew on all the op-amp and circuit knowledge I'd picked up during Electronics 1, and it became the natural next step after my earlier board designs. There's much more detail regarding schematics, HDL, and notes in the Github repository that I would love for you to check out. Right now the board is being printed and I am working on a library for digial signal processing effects for the FPGA. </p>
 
-    <footer>Last updated July 2026.</footer>
+    <footer><span>Last updated November 2026.</span><a href="index.html">Back to all projects</a></footer>
   </main>
+  </div>
 </body>
 </html>

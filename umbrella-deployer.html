@@ -8,11 +8,19 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="wrap detail">
-    <a class="back" href="index.html">← Back to home</a>
-    <p class="eyebrow">Project</p>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="name" href="index.html">Jonathan Thomas</a>
+      <nav aria-label="Main">
+        <a href="index.html#about">About</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#resume">Resume</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+  <main class="detail">
     <h1>Automatic Umbrella Deployer</h1>
-    <p class="detail-meta">NYU · First-semester engineering project · Freshman year</p>
+    <p class="detail-meta">NYU, First-semester engineering project, Freshman year</p>
 
     <video class="hero-img" controls preload="metadata" poster="assets/umbrella.jpg">
   <source src="https://pub-acf73df21f784dc6899fd8c0cee15f03.r2.dev/Automaticumbrelladeployer.mp4" />
@@ -20,7 +28,8 @@
 </video>
     <p>This was the first engineering project I worked on as a freshman at NYU. It's an umbrella that automatically deploys when water is detected.</p>
 
-    <footer>Last updated July 2026.</footer>
+    <footer><span>Last updated November 2026.</span><a href="index.html">Back to all projects</a></footer>
   </main>
+  </div>
 </body>
 </html>

@@ -9,11 +9,19 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="wrap detail">
-    <a class="back" href="index.html">← Back to home</a>
-    <p class="eyebrow">Project</p>
+  <div class="wrap">
+    <header class="topbar">
+      <a class="name" href="index.html">Jonathan Thomas</a>
+      <nav aria-label="Main">
+        <a href="index.html#about">About</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#resume">Resume</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+  <main class="detail">
     <h1>Electro TA</h1>
-    <p class="detail-meta">Hackathon · Gemini Live Agent Challenge · ESP32 · Arducam</p>
+    <p class="detail-meta">Hackathon, Gemini Live Agent Challenge, ESP32, Arducam</p>
     <div class="links">
       <a href="https://www.youtube.com/watch?v=KsgKGi3wAVk">Watch the demo ↗</a>
       <a href="https://github.com/erenmenges/ElectroTA">Check out the Repository for more info ↗</a>
@@ -38,7 +46,8 @@
     <h2>The software</h2>
     <p>Two scripts run with the microcontroller. The first is written in C++ (in PlatformIO) and tells the microcontroller how to capture pictures and read voltage. The second is a Python script that saves the image and the voltage at a given time, then sends that information to the live agent.</p>
 
-    <footer>Last updated July 2026.</footer>
+    <footer><span>Last updated November 2026.</span><a href="index.html">Back to all projects</a></footer>
   </main>
+  </div>
 </body>
 </html>
