@@ -281,6 +281,8 @@ figcaption { font-size: 15px; color: var(--muted); margin-top: 8px; }
 .media-row figure { margin: 0; }
 .media-row img { aspect-ratio: 4 / 5; object-fit: cover; }
 
+.pair.trio { grid-template-columns: repeat(3, 1fr); }
+
 @media (max-width: 700px) {
-  .pair, .media-row { grid-template-columns: 1fr; gap: 24px; }
+  .pair, .pair.trio, .media-row { grid-template-columns: 1fr; gap: 24px; }
 }
